@@ -4,6 +4,7 @@ var snekchar="▓"
 clearInterval(char_input_check)
 var snek_len = 10;
 var food_accumulated=0;
+var shit_accumulated=0;
 var snek_dir="right"
 var snek_segments=new Array();
 var snek_pos=cursorCoords.slice(0);
@@ -23,7 +24,7 @@ var snek_interval = setInterval(function() {
 		return snek_die();
 	}
 	if (oldchar!=" ") {
-		food_accumulated=food_accumulated+0.1;
+		food_accumulated=food_accumulated+0.75;
 		if (food_accumulated>=1) {
 			food_accumulated=food_accumulated-1;
 			snek_len=snek_len+1;
@@ -34,9 +35,18 @@ var snek_interval = setInterval(function() {
 	if (snek_segments.length>snek_len) {
 		var pos=snek_segments.shift();
 		writeCharTo(" ",null,pos[0],pos[1],pos[2],pos[3]);
+		if (snek_len>10) {
+			shit_accumulated=shit_accumulated+0.25
+		}
+	}
+	if (shit_accumulated>=1) {
+		shit_accumulated=shit_accumulated-1;
+		snek_len=snek_len-1;
+		var pos=snek_segments.shift();
+		writeCharTo("💩",null,pos[0],pos[1],pos[2],pos[3]);
 	}
 	writeChar(snekchar,true)
-},50)
+},75)
 var char_input_check = setInterval(function() {
 	if(w._state.uiModal) return;
 	if(write_busy) return;
