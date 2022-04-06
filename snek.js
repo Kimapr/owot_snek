@@ -3,13 +3,32 @@ alert("TEST")
 var snekchar="▓"
 clearInterval(char_input_check)
 var snek_len = 10;
+var food_accumulated=0;
 var snek_dir="right"
 var snek_segments=new Array();
 var snek_pos=cursorCoords.slice(0);
 
+snek_die=function(){
+	snek_segments.forEach(function(value,index,array){
+		writeCharTo("X",null,value[0],value[1],value[2],value[3]);
+	});
+	clearInterval(snek_interval);
+}
+
 var snek_interval = setInterval(function() {
 	cursorCoords=snek_pos.slice(0);
 	moveCursor(snek_dir);
+	var oldchar=getChar(cursorCoords[0],cursorCoords[1],cursorCoords[2],cursorCoords[3]);
+	if ((cursorCoords==null) || (oldchar==snekchar)) {
+		return snek_die();
+	}
+	if (oldchar!=" ") {
+		food_accumulated=food_accumulated+0.1;
+		if (food_accumulated>=1) {
+			food_accumulated=food_accumulated-1;
+			snek_len=snek_len+1;
+		}
+	}
 	snek_pos=cursorCoords.slice(0);
 	snek_segments.push(cursorCoords.slice(0));
 	if (snek_segments.length>snek_len) {
