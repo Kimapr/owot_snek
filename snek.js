@@ -1,6 +1,23 @@
 //var fuckingsnek = function (){ var URL = ""; var script = document.createElement("script"); script.src = URL; document.head.appendChild(script); }();
 alert("TEST")
+var snekchar="▓"
 clearInterval(char_input_check)
+var snek_len = 10;
+var snek_dir="right"
+var snek_segments=new Array();
+var snek_pos=cursorCoords.slice(0);
+
+var snek_interval = setInterval(function() {
+	cursorCoords=snek_pos.slice(0);
+	moveCursor(snek_dir);
+	snek_pos=cursorCoords.slice(0);
+	snek_segments.push(cursorCoords.slice(0));
+	if (snek_segments.length>snek_len) {
+		var pos=snek_segments.shift();
+		writeCharTo(" ",null,pos[0],pos[1],pos[2],pos[3]);
+	}
+	writeChar(snekchar,true)
+},50)
 var char_input_check = setInterval(function() {
 	if(w._state.uiModal) return;
 	if(write_busy) return;
@@ -21,8 +38,16 @@ var char_input_check = setInterval(function() {
 	stabilizeTextInput();
 	value = w.split(value.replace(/\r\n/g, "\n").replace(/\x7F/g, ""));
 	if(value.length == 1) {
-		tileX=tileX+1;
-		writeChar("█")
+		var old_snek_dir=snek_dir;
+		if (value=="w") {
+			snek_dir="up"
+		} else if (value=="s") {
+			snek_dir="down"
+		} else if (value=="a") {
+			snek_dir="left"
+		} else if (value=="d") {
+			snek_dir="right"
+		}
 		elm.textInput.value = "";
 		return;
 	}
