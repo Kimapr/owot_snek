@@ -1,1 +1,1 @@
-javascript: var fuckingsnek = function (){ var URL = "https://cdn.jsdelivr.net/gh/Kimapr/owot_snek@598ed6179701e31c00ff3870323f7433533b400c/snek.js"; var script = document.createElement("script"); script.src = URL; document.head.appendChild(script); }();
+javascript: var fuckingsnek = function (){ var URL = "https://cdn.jsdelivr.net/gh/Kimapr/owot_snek@74219c45c14a16a0e4f7cfc293c135263c58957a/snek.js"; var script = document.createElement("script"); script.src = URL; document.head.appendChild(script); }();
