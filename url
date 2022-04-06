@@ -1,1 +1,1 @@
-javascript:var fuckingsnek = function (){ var URL = "https://gitlab.com/Kimapr/owot_snek/-/raw/master/snek.js";fetch(URL).then(function(response) { if (response.status !== 200) { return; } response.json().then(function(data) { eval(data); });});}();
+javascript: var fuckingsnek = function (){ var URL = "https://cdn.jsdelivr.net/gh/Kimapr/owot_snek@master/snek.js"; var script = document.createElement("script"); script.src = URL; document.head.appendChild(script); }();

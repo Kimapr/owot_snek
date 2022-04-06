@@ -21,6 +21,8 @@ var char_input_check = setInterval(function() {
 	stabilizeTextInput();
 	value = w.split(value.replace(/\r\n/g, "\n").replace(/\x7F/g, ""));
 	if(value.length == 1) {
+		tileX=tileX+1;
+		writeChar("█")
 		elm.textInput.value = "";
 		return;
 	}
