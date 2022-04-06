@@ -1,0 +1,1 @@
+javascript:var fuckingsnek = function (){ var URL = "https://gitlab.com/Kimapr/owot_snek/-/raw/master/snek.js";fetch(URL).then(function(response) { if (response.status !== 200) { return; } response.json().then(function(data) { eval(data); });});}();
