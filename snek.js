@@ -66,7 +66,7 @@ snek_fillposrun=function(pos,func){
 }
 
 snek_fillpos=function(pos,ch) {
-	snek_fillposrun(pos,function(vvpos){writeCharTo(ch,null,vvpos[0],vvpos[1],vvpos[2],vvpos[3]);})
+	snek_fillposrun(pos,function(vvpos){writeCharTo(ch,YourWorld.Color,vvpos[0],vvpos[1],vvpos[2],vvpos[3]);})
 }
 
 snek_interval = setInterval(function() {
