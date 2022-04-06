@@ -1,5 +1,4 @@
-//var fuckingsnek = function (){ var URL = ""; var script = document.createElement("script"); script.src = URL; document.head.appendChild(script); }();
-alert("TEST")
+alert("Press OK to begin snekking")
 var snekchar="▓"
 clearInterval(char_input_check)
 var snek_len = 10;
@@ -9,7 +8,7 @@ var snek_dir="right"
 var snek_segments=new Array();
 var snek_pos=cursorCoords.slice(0);
 var death_accumulated=0;
-var snek_thick=4; // MEGA THICK SNEK
+var snek_thick=1; // INCREASE TO GET THICKER SNEK. DECREASE TO GET THINNER SNEK (MIN 0)
 
 var snek_interval;
 var check_input_check;
