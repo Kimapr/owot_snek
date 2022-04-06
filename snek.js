@@ -8,20 +8,34 @@ var shit_accumulated=0;
 var snek_dir="right"
 var snek_segments=new Array();
 var snek_pos=cursorCoords.slice(0);
+var death_accumulated=0;
+
+var snek_interval;
+var check_input_check;
 
 snek_die=function(){
 	snek_segments.forEach(function(value,index,array){
 		writeCharTo("X",null,value[0],value[1],value[2],value[3]);
 	});
 	clearInterval(snek_interval);
+	clearInterval(char_input_check);
 }
 
-var snek_interval = setInterval(function() {
+snek_interval = setInterval(function() {
 	cursorCoords=snek_pos.slice(0);
 	moveCursor(snek_dir);
-	var oldchar=getChar(cursorCoords[0],cursorCoords[1],cursorCoords[2],cursorCoords[3]);
+	var oldchar;
+	if (!(cursorCoords==null)) {
+		oldchar=getChar(cursorCoords[0],cursorCoords[1],cursorCoords[2],cursorCoords[3]);
+	}
 	if ((cursorCoords==null) || (oldchar==snekchar)) {
-		return snek_die();
+		death_accumulated=death_accumulated+0.1;
+		if (death_accumulated>=1) {
+			return snek_die();
+		}
+		return;
+	} else {
+		death_accumulated=0;
 	}
 	if (oldchar!=" ") {
 		food_accumulated=food_accumulated+0.75;
@@ -47,7 +61,7 @@ var snek_interval = setInterval(function() {
 	}
 	writeChar(snekchar,true)
 },75)
-var char_input_check = setInterval(function() {
+char_input_check = setInterval(function() {
 	if(w._state.uiModal) return;
 	if(write_busy) return;
 	var value = elm.textInput.value;
