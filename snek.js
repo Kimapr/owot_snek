@@ -4,20 +4,25 @@ clearInterval(char_input_check)
 var snek_len = 10;
 var food_accumulated=0;
 var shit_accumulated=0;
+var shit_deccumulating=0;
 var snek_dir="right"
 var snek_segments=new Array();
 var snek_pos=cursorCoords.slice(0);
 var death_accumulated=0;
 var snek_thick=1; // INCREASE TO GET THICKER SNEK. DECREASE TO GET THINNER SNEK (MIN 0)
+var snek_tickint=75*Math.pow((snek_thick*2+1)/3,0.5);
+var death_ticks=750/snek_tickint;
 
 var snek_interval;
 var check_input_check;
 
 var snek_fillpos;
 var snek_fillposrun;
+var snekrepair;
 
 snek_die=function(){
 	var snekdieint;
+	clearInterval(snekrepair);
 	snekdieint=setInterval(function(){
 		if (snek_segments.length==0) {
 			clearInterval(snekdieint);
@@ -31,6 +36,17 @@ snek_die=function(){
 	clearInterval(snek_interval);
 	clearInterval(char_input_check);
 }
+var snekrepairi=0;
+snekrepair=setInterval(function(){
+	var value=snek_segments[snekrepairi];
+	if (value!=null) {
+		snek_fillpos(value,snekchar);
+	}
+	snekrepairi++;
+	if (snekrepairi>snek_segments.length) {
+		snekrepairi=0;
+	}
+},250);
 
 snek_fillposrun=function(pos,func){
 	var vpos=pos.slice(0);
@@ -99,7 +115,7 @@ snek_interval = setInterval(function() {
 		});
 	}
 	if ((cursorCoords==null) || (badchars/cellvol>0.75)) {
-		death_accumulated=death_accumulated+0.1;
+		death_accumulated=death_accumulated+1/death_ticks;
 		if (death_accumulated>=1) {
 			return snek_die();
 		}
@@ -119,17 +135,25 @@ snek_interval = setInterval(function() {
 		var vpos=pos.slice(0);
 		snek_fillpos(pos," ")
 		if (snek_len>10) {
-			shit_accumulated=shit_accumulated+0.1*(snek_len-10)
+			shit_accumulated=shit_accumulated+0.025*(snek_len-10)
 		}
 	}
-	if (shit_accumulated>=1) {
-		shit_accumulated=shit_accumulated-1;
+	if (shit_accumulated>=15) {
+		shit_accumulated=shit_accumulated-15
+		shit_deccumulating=shit_deccumulating+15;
+	}
+	if (shit_deccumulating>=1 && snek_len>10) {
+		shit_deccumulating=shit_deccumulating-1;
 		snek_len=snek_len-1;
 		var pos=snek_segments.shift();
 		snek_fillpos(pos,"💩")
 	}
 	snek_fillpos(cursorCoords,snekchar)
-},75+(snek_thick*50))
+        positionX=-(cursorCoords[0]+cursorCoords[2]/tileC)*tileW;
+        positionY=-(cursorCoords[1]+cursorCoords[3]/tileR)*tileH;
+        w.render();
+},snek_tickint)
+
 char_input_check = setInterval(function() {
 	if(w._state.uiModal) return;
 	if(write_busy) return;
